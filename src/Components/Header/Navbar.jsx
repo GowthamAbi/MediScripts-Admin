@@ -6,7 +6,7 @@ import Footer from './Footer'
 function Navbar() {
   return (
     <div><nav className='p-2 border border-black flex justify-between items-center bg-white'>
-    <h1>MediScripts</h1>
+    <h1><a href="/inventory/Dashboard">MediScripts</a></h1>
     <div>
       <img
         src='/img/Default.png'

@@ -7,12 +7,13 @@ import InventoryLogin from './Authentication/InventoryLogin.jsx';
 import Navbar from './Components/Header/Navbar.jsx';
 import InventoryDashboard from './Components/Header/InventoryDashboard.jsx';
 import Footer from './Components/Header/Footer.jsx';
+import Inventory from './Components/Stock/Inventory.jsx';
 
 
 
 const routes = [
   {
-    path: '/inventory',
+    path: '/inventory/home',
     element: <InventoryHomePage />,
    
   },
@@ -25,17 +26,17 @@ const routes = [
     element:<InventoryLogin/>
   },
   {
-    path:'/inventory/dashboard',
+    path:'/inventory',
     element:<Navbar/>,
     children:[
      {
-      path:"",
+      path:"dashboard",
       element:<InventoryDashboard/>
      },
-     {
-      path:"/inventory/dashboard",
-      element:<Footer/>
-     },
+    {
+      path:'add',
+      element:<Inventory />
+    }
 
     ]
   }

@@ -1,6 +1,6 @@
 // MedicineManagement.jsx
 import React, { useState } from 'react';
-import api from '../../../services/authService';
+import api from '../../services/authService';
 
 export default function Inventory() {
   const [medicines, setMedicines] = useState([]);
