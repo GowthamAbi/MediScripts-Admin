@@ -6,6 +6,7 @@ import InventoryRegister from './Authentication/InventoryRegister.jsx';
 import InventoryLogin from './Authentication/InventoryLogin.jsx';
 import Navbar from './Components/Header/Navbar.jsx';
 import InventoryDashboard from './Components/Header/InventoryDashboard.jsx';
+import Footer from './Components/Header/Footer.jsx';
 
 
 
@@ -30,6 +31,10 @@ const routes = [
      {
       path:"",
       element:<InventoryDashboard/>
+     },
+     {
+      path:"/inventory/dashboard",
+      element:<Footer/>
      },
 
     ]
