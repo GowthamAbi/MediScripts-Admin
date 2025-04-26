@@ -8,6 +8,7 @@ import Navbar from './Components/Header/Navbar.jsx';
 import InventoryDashboard from './Components/Header/InventoryDashboard.jsx';
 import Footer from './Components/Header/Footer.jsx';
 import Inventory from './Components/Stock/Inventory.jsx';
+import Outward from './Components/Stock/OutWord.jsx';
 
 
 
@@ -36,6 +37,10 @@ const routes = [
     {
       path:'add',
       element:<Inventory />
+    },
+    {
+      path:'outward',
+      element:<Outward />
     }
 
     ]
