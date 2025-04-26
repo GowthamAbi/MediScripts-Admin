@@ -27,16 +27,7 @@ export default function InventoryDashboard() {
   return (
     <div className='font-serif font-bold min-h-screen flex flex-col'>
       {/* Navbar */}
-      <nav className='p-2 border border-black flex justify-between items-center bg-white'>
-        <h1>MediScripts</h1>
-        <div>
-          <img
-            src='/img/Default.png'
-            alt='Default profile'
-            className='rounded-full w-12 h-12 object-cover'
-          />
-        </div>    
-      </nav>
+      
 
       {/* Main Content */}
       <div className='flex flex-1'>

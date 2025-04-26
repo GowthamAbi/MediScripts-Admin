@@ -1,18 +1,37 @@
 import React from 'react'; 
 import { createBrowserRouter } from 'react-router-dom'; 
 import App from './App.jsx';
+import InventoryHomePage from './InventoryHomePage.jsx';
+import InventoryRegister from './Authentication/InventoryRegister.jsx';
+import InventoryLogin from './Authentication/InventoryLogin.jsx';
+import Navbar from './Components/Header/Navbar.jsx';
+import InventoryDashboard from './Components/Header/InventoryDashboard.jsx';
 
 
 
 const routes = [
   {
-    path: '/',
-    element: <App />,
-    children: [
-      {
-        path: '',
-        element:<App /> 
-      }
+    path: '/inventory',
+    element: <InventoryHomePage />,
+   
+  },
+  {
+    path:'/inventory/register',
+    element:<InventoryRegister/>
+  },
+  {
+    path:'/inventory/login',
+    element:<InventoryLogin/>
+  },
+  {
+    path:'/inventory/dashboard',
+    element:<Navbar/>,
+    children:[
+     {
+      path:"",
+      element:<InventoryDashboard/>
+     },
+
     ]
   }
 ];

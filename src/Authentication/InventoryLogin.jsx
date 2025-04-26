@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import api from '../../../services/authService';
 import { useNavigate } from 'react-router-dom';
+import api from '../services/authService';
 
 export default function InventoryLogin() {
   const navigate = useNavigate()
@@ -14,7 +14,7 @@ export default function InventoryLogin() {
     try{
       const response=await api.post('/api/v1/auth/inventory/login', { email, password })
       console.log('Login Success:', response.data);
-      navigate('/api/v1/auth/dashboard')
+      navigate('/inventory/dashboard')
 
      
     }

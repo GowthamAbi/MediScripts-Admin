@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import api from "../../../services/authService";
+import api from "../services/authService";
 
 const InventoryRegister =()=>{
     const navigator=useNavigate()
