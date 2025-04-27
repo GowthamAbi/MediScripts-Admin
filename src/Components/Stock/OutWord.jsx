@@ -32,13 +32,13 @@ export default function Outward() {
 
     const newMedicine = {
       ...formData,
-      medicineId: Date.now().toString(), // Always generate new ID on submit
+      medicineId: Date.now().toString(), // Always generate new ID
     };
 
     setMedicines([...medicines, newMedicine]);
 
     try {
-      const response = await api.post('/api/v1/medicine/inventory/add', newMedicine);
+      const response = await api.post('/api/v1/medicine/inventory/outward', newMedicine);
       console.log('Add Success:', response.data);
     } catch (error) {
       console.error('Error adding medicine:', error);
@@ -77,86 +77,98 @@ export default function Outward() {
   ];
 
   return (
-    <div style={{ padding: '20px' }} >
-      <h2>Add New Medicine</h2>
+    <div className='h-screen pt-20 font-serif mx-auto px-4'>
+      <h2 className="text-2xl font-bold mb-4 text-center">Enter The Delivery Madicine</h2>
+
+      {/* Form Section */}
       <form onSubmit={handleSubmit} className='flex flex-col items-center justify-center'>
-      
-        <table border="1" width="100%" cellPadding="10" > 
+        <div className="overflow-x-auto w-full">
+          <table className="min-w-full border-collapse text-sm" border="1" cellPadding="10">
+            <thead>
+              <tr className='border-2 border-black bg-gray-100'>
+                {medicineFields.map((item, index) => (
+                  <th key={index} className='border-2 border-black p-2'>{item.label}</th>
+                ))}
+                <th className='border-2 border-black p-2'>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className='border-2 border-black'>
+                {medicineFields.map((item, index) => (
+                  <td key={index} className='border-2 border-black '>
+                    <input
+                      type={item.type}
+                      name={item.name}
+                      value={formData[item.name]}
+                      onChange={handleChange}
+                      placeholder={item.placeholder}
+                      required={item.required}
+                      className="border rounded px-4 py-2 w-full"
+                    />
+                  </td>
+                ))}
+                <td className='p-2'>
+                  <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
+                    Add
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </form>
+
+      {/* Medicine List Section */}
+      <h2 className="text-2xl font-bold my-6 text-center">Deliveried Medicine List</h2>
+
+      <div className="overflow-x-auto w-full">
+        <table className="min-w-full border-collapse text-sm" border="1" cellPadding="10">
           <thead>
-            <tr className='border-2 border-black'>
-              {medicineFields.map((item, index) => (
-                <th key={index} className='border-2 border-black ' >{item.label}</th>
-              ))}
-              <th>Action</th>
+            <tr className="bg-gray-100">
+              <th>Medicine Name</th>
+              <th>Type</th>
+              <th>Price</th>
+              <th>Description</th>
+              <th>Company</th>
+              <th>Image</th>
+              <th>Quantity</th>
+              <th>Expiry Date</th>
+              <th>Manufacture Date</th>
+              <th>Category</th>
+              <th>Sub-Category</th>
+              <th>Medicine ID</th>
+              <th>Weight</th>
             </tr>
           </thead>
           <tbody>
-            <tr className='border-2 border-black'>
-              {medicineFields.map((item, index) => (
-                <td key={index} className='border-2 border-black'>
-                  <input
-                    type={item.type}
-                    name={item.name}
-                    value={formData[item.name]}
-                    onChange={handleChange}
-                    placeholder={item.placeholder}
-                    required={item.required}
-                  />
-                </td>
-              ))}
-              <td>
-                <button type="submit">Add</button>
-              </td>
-            </tr>
+            {medicines.length > 0 ? (
+              medicines.map((med, index) => (
+                <tr key={index}>
+                  <td>{med.medicineName}</td>
+                  <td>{med.medicineType}</td>
+                  <td>₹{med.medicinePrice}</td>
+                  <td className="max-w-[150px] truncate">{med.medicineDescription}</td>
+                  <td>{med.medicineCompany}</td>
+                  <td>
+                    <img src={med.medicineImage} alt="medicine" width="50" />
+                  </td>
+                  <td>{med.medicineQuantity}</td>
+                  <td>{new Date(med.medicineExpiryDate).toLocaleDateString()}</td>
+                  <td>{new Date(med.medicineManufactureDate).toLocaleDateString()}</td>
+                  <td>{med.medicineCategory}</td>
+                  <td>{med.medicineSubCategory}</td>
+                  <td>{med.medicineId}</td>
+                  <td>{med.medicineWtg}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="13" className="text-center py-4">No Medicines Available</td>
+              </tr>
+            )}
           </tbody>
         </table>
-      </form>
-
-      <h2>Medicine List</h2>
-      <table border="1" width="100%" cellPadding="10">
-        <thead>
-          <tr>
-            <th>Medicine Name</th>
-            <th>Type</th>
-            <th>Price</th>
-            <th>Description</th>
-            <th>Company</th>
-            <th>Image</th>
-            <th>Quantity</th>
-            <th>Expiry Date</th>
-            <th>Manufacture Date</th>
-            <th>Category</th>
-            <th>Sub-Category</th>
-            <th>Medicine ID</th>
-            <th>Weight</th>
-          </tr>
-        </thead>
-        <tbody>
-          {medicines.length > 0 ? (
-            medicines.map((med, index) => (
-              <tr key={index}>
-                <td>{med.medicineName}</td>
-                <td>{med.medicineType}</td>
-                <td>₹{med.medicinePrice}</td>
-                <td>{med.medicineDescription}</td>
-                <td>{med.medicineCompany}</td>
-                <td><img src={med.medicineImage} alt="medicine" width="50" /></td>
-                <td>{med.medicineQuantity}</td>
-                <td>{new Date(med.medicineExpiryDate).toLocaleDateString()}</td>
-                <td>{new Date(med.medicineManufactureDate).toLocaleDateString()}</td>
-                <td>{med.medicineCategory}</td>
-                <td>{med.medicineSubCategory}</td>
-                <td>{med.medicineId}</td>
-                <td>{med.medicineWtg}</td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="13" align="center">No Medicines Available</td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+      </div>
     </div>
   );
 }

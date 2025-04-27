@@ -5,47 +5,29 @@ import InventoryHomePage from './InventoryHomePage.jsx';
 import InventoryRegister from './Authentication/InventoryRegister.jsx';
 import InventoryLogin from './Authentication/InventoryLogin.jsx';
 import Navbar from './Components/Header/Navbar.jsx';
-import InventoryDashboard from './Components/Header/InventoryDashboard.jsx';
+import SideBar from './Components/Header/SideBar.jsx';
 import Footer from './Components/Header/Footer.jsx';
 import Inventory from './Components/Stock/Inventory.jsx';
 import Outward from './Components/Stock/OutWord.jsx';
+import DashBoard from './Components/Pages/DashBoard.jsx';
 
 
 
 const routes = [
+  { path: '/', element: <InventoryHomePage /> },
+  { path: '/inventory/register', element: <InventoryRegister /> },
+  { path: '/inventory/login', element: <InventoryLogin /> },
   {
-    path: '/inventory/home',
-    element: <InventoryHomePage />,
-   
-  },
-  {
-    path:'/inventory/register',
-    element:<InventoryRegister/>
-  },
-  {
-    path:'/inventory/login',
-    element:<InventoryLogin/>
-  },
-  {
-    path:'/inventory',
-    element:<Navbar/>,
-    children:[
-     {
-      path:"dashboard",
-      element:<InventoryDashboard/>
-     },
-    {
-      path:'add',
-      element:<Inventory />
-    },
-    {
-      path:'outward',
-      element:<Outward />
-    }
-
-    ]
+    path: '/inventory',
+    element: <Navbar />,  // <- This layout wraps all below
+    children: [
+      { path: 'dashboard', element: <DashBoard /> },
+      { path: 'add', element: <Inventory /> },
+      { path: 'outward', element: <Outward /> },
+    ],
   }
 ];
+
 
 const router = createBrowserRouter(routes, {
   future: {

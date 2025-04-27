@@ -45,7 +45,7 @@ export default function InventoryDashboard() {
       {/* Main Content */}
       <div className='flex flex-1'>
         {/* Sidebar */}
-        <div className='bg-slate-500 w-1/6 md:w-2/12 p-4 text-white text-sm'>
+        <div className='bg-slate-500 w-1/4 md:w-full p-4 text-white md:text-sm sm:text-sm'>
           <ul className='space-y-4'>
             <li className='cursor-pointer hover:underline'>
               <a href="/inventory/Dashboard">HOME</a>
@@ -59,7 +59,7 @@ export default function InventoryDashboard() {
               {clickInventory && (
                 <ul className='ml-6 mt-2 space-y-2 text-sm text-white'>
                   <li className='hover:underline cursor-pointer'> <a href="/inventory/add">Inward</a></li>
-                  <li className='hover:underline cursor-pointer'>Outward</li>
+                  <li className='hover:underline cursor-pointer'><a href="/inventory/outward">Outward</a></li>
                 </ul>
               )}
             </li>
@@ -112,10 +112,6 @@ export default function InventoryDashboard() {
           </ul>
         </div>
 
-        {/* Main Panel */}
-        <div className='flex-1 p-4'>
-          <h2 className='text-xl'>Welcome to Inventory Dashboard</h2>
-        </div>
       </div>
     </div>
   );

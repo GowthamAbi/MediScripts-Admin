@@ -2,13 +2,13 @@ import { Link } from 'react-router-dom';
 
 const InventoryHomePage = () => {
   const auth = [
-    { label: "Sign Up", href: "/api/v1/auth/inventory/register" },
-    { label: "Sign In", href: "/api/v1/auth/inventory/login" },
+    { label: "Sign Up", href: "/inventory/register" },
+    { label: "Sign In", href: "/inventory/login" },
   ];
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen px-4 bg-gray-100"> 
-      <h1 className="text-black text-8xl font-bold mb-6 text-center">Welcome to CustomerHome</h1>
+      <h1 className="text-black text-8xl font-bold mb-6 text-center">Welcome to InventoryHome</h1>
       <div className="space-x-4">
         {auth.map((item, index) => (
           <Link
