@@ -1,5 +1,5 @@
 // MedicineManagement.jsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import api from '../../services/authService';
 
 export default function Inventory() {
@@ -19,6 +19,38 @@ export default function Inventory() {
     medicineId: Date.now().toString(),
     medicineWtg: '',
   });
+  const [medicineList, setMedicineList] = useState([]);
+
+  const fetchMedicines = async () => {
+    try {
+      const response = await api.get('/api/v1/medicine/inventory/list');
+      const list = response.data.inventory; // Access the 'inventory' field from the response
+  
+      if (Array.isArray(list)) {
+        setMedicineList(list); // Update state with the inventory array
+      } else {
+        console.error('Fetched data is not an array:', list);
+        setMedicineList([]);  // Optionally set an empty list if data is not in expected format
+      }
+  
+      console.log('Fetched Medicine List:', list);
+    } catch (error) {
+      console.error('Error fetching medicines:', error);
+      setMedicineList([]);  // Set empty list in case of error
+    }
+  };
+  
+  
+
+useEffect(() => {
+  console.log('Updated Medicine List:', medicineList); // Log updated state
+}, [medicineList]); // Triggered whenever medicineList changes
+
+
+
+  useEffect(() => {
+    fetchMedicines();
+  }, []);
 
   const handleChange = (e) => {
     setFormData({
@@ -32,14 +64,13 @@ export default function Inventory() {
 
     const newMedicine = {
       ...formData,
-      medicineId: Date.now().toString(), // Always generate new ID
+      medicineId: Date.now().toString(),
     };
-
-    setMedicines([...medicines, newMedicine]);
 
     try {
       const response = await api.post('/api/v1/medicine/inventory/add', newMedicine);
       console.log('Add Success:', response.data);
+      await fetchMedicines(); // Re-fetch updated medicine list from server
     } catch (error) {
       console.error('Error adding medicine:', error);
     }
@@ -141,32 +172,34 @@ export default function Inventory() {
             </tr>
           </thead>
           <tbody>
-            {medicines.length > 0 ? (
-              medicines.map((med, index) => (
-                <tr key={index}>
-                  <td>{med.medicineName}</td>
-                  <td>{med.medicineType}</td>
-                  <td>₹{med.medicinePrice}</td>
-                  <td className="max-w-[150px] truncate">{med.medicineDescription}</td>
-                  <td>{med.medicineCompany}</td>
+          {console.log({"medicne list": medicineList})}
+          {Array.isArray(medicineList) ? (
+              medicineList.map((medicine, index) => (
+                <tr key={medicine.medicineId || index}>
+                  <td>{medicine.medicineName}</td>
+                  <td>{medicine.medicineType}</td>
+                  <td>₹{medicine.medicinePrice}</td>
+                  <td className="max-w-[150px] truncate">{medicine.medicineDescription}</td>
+                  <td>{medicine.medicineCompany}</td>
                   <td>
-                    <img src={med.medicineImage} alt="medicine" width="50" />
+                    <img src={medicine.medicineImage} alt="medicine" width="50" />
                   </td>
-                  <td>{med.medicineQuantity}</td>
-                  <td>{new Date(med.medicineExpiryDate).toLocaleDateString()}</td>
-                  <td>{new Date(med.medicineManufactureDate).toLocaleDateString()}</td>
-                  <td>{med.medicineCategory}</td>
-                  <td>{med.medicineSubCategory}</td>
-                  <td>{med.medicineId}</td>
-                  <td>{med.medicineWtg}</td>
+                  <td>{medicine.medicineQuantity}</td>
+                  <td>{new Date(medicine.medicineExpiryDate).toLocaleDateString()}</td>
+                  <td>{new Date(medicine.medicineManufactureDate).toLocaleDateString()}</td>
+                  <td>{medicine.medicineCategory}</td>
+                  <td>{medicine.medicineSubCategory}</td>
+                  <td>{medicine.medicineId}</td>
+                  <td>{medicine.medicineWtg}</td>
                 </tr>
               ))
-            ) : (
-              <tr>
-                <td colSpan="13" className="text-center py-4">No Medicines Available</td>
-              </tr>
-            )}
-          </tbody>
+  ) : (
+    <tr><td colSpan="12">No medicines found</td></tr>
+  )}
+</tbody>
+
+
+
         </table>
       </div>
     </div>
